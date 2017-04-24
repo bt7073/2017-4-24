@@ -1,0 +1,73 @@
+#include <Keypad.h>
+const byte ROWS = 4; 
+const byte COLS = 4;
+
+char keys[ROWS][COLS] = 
+{
+  {'7','8','9','C'}, 
+  {'4','5','6','D'},
+  {'1','2','3','E'}, 
+  {'0','A','B','F'}
+};
+byte rowPins[ROWS] = {6,5,4,3};
+byte colPins[COLS] = {10,9,8,7};
+Keypad keypad = Keypad( makeKeymap(keys), rowPins, colPins, ROWS, COLS );
+
+#define NOTE_C3 131
+#define NOTE_CS3 139
+#define NOTE_D3 147
+#define NOTE_DS3 156
+#define NOTE_E3 165
+#define NOTE_F3 175
+#define NOTE_FS3 185
+#define NOTE_G3 196
+#define NOTE_GS3 349
+#define NOTE_A3 392
+#define NOTE_AS3 440
+#define NOTE_B3 493
+#define NOTE_C4 523
+#define NOTE_CS4 587
+#define NOTE_D4 659
+#define NOTE_DS4 698
+#define NOTE_E4 784
+#define NOTE_F4 880
+#define NOTE_FS4 988
+#define NOTE_G4 1046
+#define NOTE_GS4 1175
+#define NOTE_A4 1318
+#define NOTE_AS4 1397
+#define NOTE_B4 1568
+#define WHOLE 1 //全分符
+#define HALF 0.5 //半分符
+#define QUARTER 0.25
+#define EIGHTH 0.125
+#define SIXTEENTH 0.0625
+
+int tune[] = {NOTE_GS3,NOTE_A3,NOTE_AS3,NOTE_B3,NOTE_C4,NOTE_CS4,
+NOTE_D4,NOTE_DS4,NOTE_E4,NOTE_F4,NOTE_FS4,NOTE_G4,NOTE_GS4,NOTE_A4,
+NOTE_AS4,NOTE_B4};
+
+void setup()
+{
+  pinMode(A0, OUTPUT);
+}
+void loop()
+{
+  char key = keypad.getKey();
+  if (key != NO_KEY)
+  {
+    if(key >= '0' && key <= '9')
+    {
+      tone(A0, tune[key-48]);
+      delay(100);
+      noTone(A0);
+    }
+    if(key >= 'A' && key <= 'F')
+    {
+      tone(A0, tune[key-65+10]);
+      delay(100);
+      noTone(A0);
+    }
+    
+  }
+}
